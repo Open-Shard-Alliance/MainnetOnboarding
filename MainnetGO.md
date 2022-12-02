@@ -42,7 +42,7 @@ make release
 ```
 * Install Nodejs and NPM
 ```
-curl -sL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install build-essential nodejs
 PATH="$PATH"
 ```
