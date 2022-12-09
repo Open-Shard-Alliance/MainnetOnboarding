@@ -111,7 +111,7 @@ near generate-key <pool_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
-cp ~/.near-credentials/YOUR_WALLET.json ~/.near/mainnet/validator_key.json
+cp ~/.near-credentials/mainnet/YOUR_WALLET.json ~/.near/validator_key.json
 ```
 * Edit “account_id” => xx.poolv1.near, where xx is your PoolName
 * Change “private_key” to “secret_key”
