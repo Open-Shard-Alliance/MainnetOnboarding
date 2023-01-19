@@ -33,7 +33,7 @@ git clone https://github.com/nearprotocol/nearcore.git
 ```
 * Set environment to the latest release tag. For the latest release tag, please check here: https://github.com/near/nearcore/releases.  Note: RC tags are for Testnet only.
 ```
-export NEAR_RELEASE_VERSION=1.29.2
+export NEAR_RELEASE_VERSION=1.30.0
 ```
 ```
 cd nearcore
@@ -153,7 +153,6 @@ Description=NEARd Daemon Service
 [Service]
 Type=simple
 User=<USER>
-#Group=near
 WorkingDirectory=/home/<USER>/.near
 ExecStart=/home/<USER>/nearcore/target/release/neard run
 Restart=on-failure
