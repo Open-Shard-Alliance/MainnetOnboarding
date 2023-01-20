@@ -269,7 +269,7 @@ near call <pool_name> update_reward_fee_fraction '{"reward_fee_fraction": {"nume
 
 You will see something like this:
 
-![img](/images/pool.png)
+![img](/images/create_pool_result.png)
 
 If there is a “True” at the End. Your pool is created.
 
