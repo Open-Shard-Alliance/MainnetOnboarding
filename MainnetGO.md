@@ -112,6 +112,7 @@ near generate-key <pool_id>
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
 cp ~/.near-credentials/YOUR_WALLET.json ~/.near/mainnet/validator_key.json
+vi ~/.near/validator_key.json
 ```
 * Edit “account_id” => xx.poolv1.near, where xx is your PoolName
 * Change “private_key” to “secret_key”
@@ -122,16 +123,6 @@ cp ~/.near-credentials/YOUR_WALLET.json ~/.near/mainnet/validator_key.json
 >   "public_key": "ed25519:HeaBJ3xLgvZacQWmEctTeUqyfSU4SDEnEwckWxd92W2G",
 >   "secret_key": "ed25519:****"
 > }
-```
-near generate-key <your_accountId>
-vi ~/.near/{your_accountId}.json
-```
-Rename "private_key" to "secret_key", then move the file to ~/.near.
-
-```
-mv the file to ~/.near
-```
-Update "account_id" to be the staking_pool_id
 
 > Note: The account_id must match the staking pool contract name or you will not be able to sign blocks.
 
@@ -261,7 +252,7 @@ From the example above, you need to replace:
 * **Pool ID**: Staking pool name, the factory automatically adds its name to this parameter, creating {pool_id}.{staking_pool_factory}
 Examples:   
 
-- `XXX.poolv1.near` for mainnet
+- `XXX` for mainnet
 
 * **Owner ID**: The NEAR account that will manage the staking pool. Usually your main NEAR account.
 * **Public Key**: The public key in your **validator_key.json** file.
