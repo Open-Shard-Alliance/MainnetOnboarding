@@ -1,5 +1,11 @@
 # NEAR Validator Guide🚀
 
+# Definitions
+
+<pool_id> or pool_id - your pool name, for example nearuaguild
+<full_pool_id> or full_pool_id - xxx.poolv1.near, where xxx is your pool_id
+<accountId> or accountId - xxx.near where xxx your account name, for example nearukraineguild.near
+
 # Setup using NEARCore
 
 #### Step 1 – Installation required software & set the configuration
@@ -91,35 +97,34 @@ near login
 ![img](/images/5.png)
 
 #### Step 4 – Initialize & Start the Node
-* Download the latest genesis, config files:
+* Download the latest genesis:
 ```
 mkdir ~/.near
 cd ~/.near
 wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/genesis.json
-wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/config.json
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
 
-* Initialize NEAR:
+* From nearcore folder initialize NEAR:
 ```
-target/release/neard init --chain-id="mainnet" --account-id=<staking pool id>
+target/release/neard init --chain-id="mainnet" --account-id=<full_pool_id>
 ```
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
-near generate-key <pool_id>
+near generate-key <full_pool_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
 cp ~/.near-credentials/YOUR_WALLET.json ~/.near/mainnet/validator_key.json
 vi ~/.near/validator_key.json
 ```
-* Edit “account_id” => xx.poolv1.near, where xx is your PoolName
+* Edit “account_id” => full_pool_id
 * Change “private_key” to “secret_key”
 > Note: The account_id must match the staking pool contract name or you will not be able to sign blocks.
 > File content must be something like :
 > {
->   "account_id": "xx.poolv1.near",
+>   "account_id": "xxx.poolv1.near",
 >   "public_key": "ed25519:HeaBJ3xLgvZacQWmEctTeUqyfSU4SDEnEwckWxd92W2G",
 >   "secret_key": "ed25519:****"
 > }
@@ -222,16 +227,16 @@ The identifying information that we ask the validators:to provide are:
 Command:
 
 ```
-near call name.near update_field '{"pool_id": "<pool_id>.poolv1.near", "name": "url", "value": "https://yoururl.com"}' --accountId=<accountId>.near  --gas=200000000000000
+near call name.near update_field '{"pool_id": "<full_pool_id>", "name": "url", "value": "https://yoururl.com"}' --accountId=<accountId>  --gas=200000000000000
 ```
 ```
-near call name.near update_field '{"pool_id": "<pool_id>.poolv1.near", "name": "twitter", "value": "<twitter>"}' --accountId=<account id>.near  --gas=200000000000000
+near call name.near update_field '{"pool_id": "<full_pool_id>", "name": "twitter", "value": "<twitter>"}' --accountId=<accountId>  --gas=200000000000000
 ```
 ```
 near view name.near get_all_fields '{"from_index": 0, "limit": 3}'
 ```
 ```
-near view name.near get_fields_by_pool '{"pool_id": "<pool_id>.poolv1.near"}'
+near view name.near get_fields_by_pool '{"pool_id": "<full_pool_id>"}'
 ```
 ---
 
@@ -244,7 +249,7 @@ Calls the staking pool factory, creates a new staking pool with the specified na
 
 For Mainnet
 ```
-near call poolv1.near create_staking_pool '{"staking_pool_id": "<pool id>", "owner_id": "<accountId>", "stake_public_key": "<public key>", "reward_fee_fraction": {"numerator": 5, "denominator": 100}}' --accountId="<accountId>" --amount=30 --gas=300000000000000
+near call poolv1.near create_staking_pool '{"staking_pool_id": "<pool_id>", "owner_id": "<accountId>", "stake_public_key": "<public key>", "reward_fee_fraction": {"numerator": 5, "denominator": 100}}' --accountId="<accountId>" --amount=30 --gas=300000000000000
 ```
 
 From the example above, you need to replace:
@@ -252,7 +257,7 @@ From the example above, you need to replace:
 * **Pool ID**: Staking pool name, the factory automatically adds its name to this parameter, creating {pool_id}.{staking_pool_factory}
 Examples:   
 
-- `XXX` for mainnet
+- `XXX` for mainnet, for example "nearuaguild"
 
 * **Owner ID**: The NEAR account that will manage the staking pool. Usually your main NEAR account.
 * **Public Key**: The public key in your **validator_key.json** file.
@@ -263,7 +268,7 @@ Examples:
 
 To change the pool parameters, such as changing the amount of commission charged to 1% in the example below, use this command:
 ```
-near call <pool_name> update_reward_fee_fraction '{"reward_fee_fraction": {"numerator": 1, "denominator": 100}}' --accountId <account_id> --gas=300000000000000
+near call <full_pool_id> update_reward_fee_fraction '{"reward_fee_fraction": {"numerator": 1, "denominator": 100}}' --accountId <account_id> --gas=300000000000000
 ```
 
 
@@ -275,18 +280,6 @@ If there is a “True” at the End. Your pool is created.
 
 **You have now configure your Staking pool.**
 
-
-#### Configure your staking pool contract
-Replace:
-
-* Pool Name – pool_id.staking_pool_factory
-* Owner Id
-* Public Key
-* Reward Fraction
-* Account Id
-```
-near call <pool name> new '{"owner_id": "<owner id>", "<public key>": "<public key>", "reward_fee_fraction": {"numerator": <reward fraction>, "denominator": 100}}' --accountId <accountId>
-```
 #### Manage your staking pool contract
 > HINT: Copy/Paste everything after this line into a text editor and use search and replace. Once your pool is deployed, you can issue the commands below:
 
@@ -296,18 +289,18 @@ near call <pool name> new '{"owner_id": "<owner id>", "<public key>": "<public k
 Command:
 
 ```
-near view {pool_id}.{staking_pool_factory} get_owner_id '{}'
+near view {full_pool_id} get_owner_id '{}'
 ```
 ##### Issue this command to retrieve the public key the network has for your validator
 Command:
 
 ```
-near view {pool_id}.{staking_pool_factory} get_staking_key '{}'
+near view {full_pool_id} get_staking_key '{}'
 ```
 ##### If the public key does not match you can update the staking key like this (replace the pubkey below with the key in your validator.json file)
 
 ```
-near call {pool_id}.{staking_pool_factory} update_staking_key '{"stake_public_key": "<public key>"}' --accountId <accountId>
+near call {full_pool_id} update_staking_key '{"stake_public_key": "<public key>"}' --accountId <accountId>
 ```
 
 ### Working with Staking Pools
