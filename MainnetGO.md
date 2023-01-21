@@ -280,18 +280,6 @@ If there is a “True” at the End. Your pool is created.
 
 **You have now configure your Staking pool.**
 
-
-#### Configure your staking pool contract
-Replace:
-
-* Full_pool_id – pool_id.staking_pool_factory
-* Owner Id
-* Public Key
-* Reward Fraction
-* Account Id
-```
-near call <full_pool_id> new '{"owner_id": "<owner id>", "<public key>": "<public key>", "reward_fee_fraction": {"numerator": <reward fraction>, "denominator": 100}}' --accountId <accountId>
-```
 #### Manage your staking pool contract
 > HINT: Copy/Paste everything after this line into a text editor and use search and replace. Once your pool is deployed, you can issue the commands below:
 
