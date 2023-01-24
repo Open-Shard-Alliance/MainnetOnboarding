@@ -115,11 +115,11 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
-near generate-key <account_id>
+near generate-key <full_pool_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
-cp ~/.near-credentials/<account_id>.json ~/.near/validator_key.json
+cp ~/.near-credentials/<full_pool_id>.json ~/.near/validator_key.json
 vi ~/.near/validator_key.json
 ```
 * Edit “account_id” => full_pool_id
