@@ -330,7 +330,9 @@ export ACCOUNTID=<account_id>
 
 echo "---" >> $LOGS/all.log
 date >> $LOGS/all.log
+
 near call $POOLID ping '{}' --accountId $ACCOUNTID --gas=300000000000000 >> $LOGS/all.log
+
 near proposals | grep $POOLID >> $LOGS/all.log
 near validators current | grep $POOLID >> $LOGS/all.log
 near validators next | grep $POOLID >> $LOGS/all.log
