@@ -115,11 +115,11 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
-near generate-key <full_pool_id>
+near generate-key <account_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
-cp ~/.near-credentials/YOUR_WALLET.json ~/.near/validator_key.json
+cp ~/.near-credentials/<account_id>.json ~/.near/validator_key.json
 vi ~/.near/validator_key.json
 ```
 * Edit “account_id” => full_pool_id
@@ -330,7 +330,7 @@ export ACCOUNTID=<account_id>
 
 echo "---" >> $LOGS/all.log
 date >> $LOGS/all.log
-near call $POOLID.factory.shardnet.near ping '{}' --accountId $ACCOUNTID.shardnet.near --gas=300000000000000 >> $LOGS/all.log
+near call $POOLID ping '{}' --accountId $ACCOUNTID --gas=300000000000000 >> $LOGS/all.log
 near proposals | grep $POOLID >> $LOGS/all.log
 near validators current | grep $POOLID >> $LOGS/all.log
 near validators next | grep $POOLID >> $LOGS/all.log
