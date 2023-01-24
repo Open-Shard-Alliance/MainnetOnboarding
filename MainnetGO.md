@@ -310,7 +310,7 @@ near call {full_pool_id} update_staking_key '{"stake_public_key": "<public key>"
 
 In order to get a validator seat you must first submit a proposal with an appropriate amount of stake. Proposals are sent for epoch +2. Meaning if you send a proposal now, if approved, you would get the seat in 3 epochs. You should submit a proposal every epoch to ensure your seat. To send a proposal we use the ping command. A proposal is also sent if a stake or unstake command is sent to the staking pool contract.
 
-Create cron with ping command to send proposal and update your pool info.
+To note, a ping also updates the staking balances for your delegators. A ping should be issued each epoch to keep reported rewards current on the pool contract. You could set up a ping using a cron job or use [Cron Cat](https://cron.cat/).
 
 ## Steps
 
