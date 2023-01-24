@@ -97,18 +97,21 @@ near login
 ![img](/images/5.png)
 
 #### Step 4 – Initialize & Start the Node
-* Download the latest genesis:
-```
-mkdir ~/.near
-cd ~/.near
-wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/genesis.json
-```
-* Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
-
 * From nearcore folder initialize NEAR:
 ```
 target/release/neard init --chain-id="mainnet" --account-id=<full_pool_id>
 ```
+**Note that if you want to download blocks faster just stop command after initialization and go further by guide.
+
+* Download the latest genesis and config, if config already exist just delete it and download a new one:
+```
+cd ~/.near
+rm genesis.json (if exists)
+rm config.json (if exists)
+wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/genesis.json
+wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/config.json
+```
+* Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
