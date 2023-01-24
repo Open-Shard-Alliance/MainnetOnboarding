@@ -2,9 +2,9 @@
 
 # Definitions
 
-<pool_id> or pool_id - your pool name, for example nearuaguild
-<full_pool_id> or full_pool_id - xxx.poolv1.near, where xxx is your pool_id
-<accountId> or accountId - xxx.near where xxx your account name, for example nearukraineguild.near
+* <pool_id> or pool_id - your pool name, for example nearuaguild
+* <full_pool_id> or full_pool_id - xxx.poolv1.near, where xxx is your pool_id
+* <accountId\> or accountId  - xxx.near where xxx your account name, for example nearukraineguild.near
 
 # Setup using NEARCore
 
@@ -116,7 +116,7 @@ near generate-key <full_pool_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
-cp ~/.near-credentials/YOUR_WALLET.json ~/.near/mainnet/validator_key.json
+cp ~/.near-credentials/YOUR_WALLET.json ~/.near/validator_key.json
 vi ~/.near/validator_key.json
 ```
 * Edit “account_id” => full_pool_id
@@ -310,4 +310,58 @@ near call {full_pool_id} update_staking_key '{"stake_public_key": "<public key>"
 
 In order to get a validator seat you must first submit a proposal with an appropriate amount of stake. Proposals are sent for epoch +2. Meaning if you send a proposal now, if approved, you would get the seat in 3 epochs. You should submit a proposal every epoch to ensure your seat. To send a proposal we use the ping command. A proposal is also sent if a stake or unstake command is sent to the staking pool contract.
 
-To note, a ping also updates the staking balances for your delegators. A ping should be issued each epoch to keep reported rewards current on the pool contract. You could set up a ping using a cron job or use [Cron Cat](https://cron.cat/).
+Create cron with ping command to send proposal and update your pool info.
+
+## Steps
+
+Create a new file on /home/<USER_ID>/scripts/ping.sh
+
+```
+#!/bin/sh
+# Ping call to renew Proposal added to crontab
+
+export NEAR_ENV=mainnet
+export LOGS=/home/<USER_ID>/logs
+export POOLID=<full_pool_id>
+export ACCOUNTID=<account_id>
+
+echo "---" >> $LOGS/all.log
+date >> $LOGS/all.log
+near call $POOLID.factory.shardnet.near ping '{}' --accountId $ACCOUNTID.shardnet.near --gas=300000000000000 >> $LOGS/all.log
+near proposals | grep $POOLID >> $LOGS/all.log
+near validators current | grep $POOLID >> $LOGS/all.log
+near validators next | grep $POOLID >> $LOGS/all.log
+
+```
+
+Create logs folder:
+
+```
+mkdir $HOME/logs
+```
+
+Change execute permission for ping.sh file:
+
+```
+chmod +x $HOME/scripts/ping.sh
+```
+
+Create a new crontab, running every 2 hours:
+
+```
+crontab -e
+0 */2 * * * sh /home/<USER_ID>/scripts/ping.sh
+```
+
+List crontab to see it is running:
+```
+crontab -l
+```
+
+Review your logs
+
+```
+cat $HOME/logs/all.log
+```
+
+That is it, now you need to have enough delegated tokens to be an active validator, welcome to decentralized Near Protocol!
