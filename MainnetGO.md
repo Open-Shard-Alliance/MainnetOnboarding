@@ -119,7 +119,7 @@ near generate-key <full_pool_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
-cp ~/.near-credentials/<full_pool_id>.json ~/.near/validator_key.json
+cp ~/.near-credentials/mainnet/<full_pool_id>.json ~/.near/validator_key.json
 vi ~/.near/validator_key.json
 ```
 * Edit “account_id” => full_pool_id
