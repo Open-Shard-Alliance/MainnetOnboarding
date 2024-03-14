@@ -116,6 +116,9 @@ Or
 Get aws and S5Cmd before
 s5cmd:https://github.com/peak/s5cmd/releases
 ```
+cd ~/.near
+mkdir data
+cd data
 aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/rpc/latest .
 LATEST=$(cat latest)
 s5cmd --no-sign-request sync s3://near-protocol-public/backups/mainnet/rpc/$LATEST/* .
