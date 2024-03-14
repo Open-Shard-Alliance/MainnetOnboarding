@@ -112,6 +112,14 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/config.json
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
+Or
+Get aws and S5Cmd before
+s5cmd:https://github.com/peak/s5cmd/releases
+```
+aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/rpc/latest .
+LATEST=$(cat latest)
+s5cmd --no-sign-request sync s3://near-protocol-public/backups/mainnet/rpc/$LATEST/* .
+```
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
